@@ -3,7 +3,6 @@ console.log(process.env.HARPERDB_URL); // remove this after you've confirmed it 
 const harperSaveMessage = require('./services/harper-save-message');
 const harperGetMessages = require('./services/harper-get-messages');
 const express = require('express');
-const harperSaveMessage = require('./services/harper-save-message.js'); // Add this
 const app = express();
 http = require('http');
 const cors = require('cors');
