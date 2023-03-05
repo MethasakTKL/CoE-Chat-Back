@@ -1,4 +1,9 @@
+require('dotenv').config();
+console.log(process.env.HARPERDB_URL); // remove this after you've confirmed it working
+const harperSaveMessage = require('./services/harper-save-message');
+const harperGetMessages = require('./services/harper-get-messages');
 const express = require('express');
+const harperSaveMessage = require('./services/harper-save-message.js'); // Add this
 const app = express();
 http = require('http');
 const cors = require('cors');
@@ -46,7 +51,20 @@ io.on('connection', (socket) => {
         chatRoomUsers = allUsers.filter((user) => user.room === room);
         socket.to(room).emit('chatroom_users', chatRoomUsers);
         socket.emit('chatroom_users', chatRoomUsers);
+        harperGetMessages(room)
+        .then((last100Messages) => {
+          // console.log('latest messages', last100Messages);
+          socket.emit('last_100_messages', last100Messages);
+        })
+        .catch((err) => console.log(err));
     });
+    socket.on('send_message', (data) => {
+        const { message, username, room, __createdtime__ } = data;
+        io.in(room).emit('receive_message', data); // Send to all users in room, including sender
+        harperSaveMessage(message, username, room, __createdtime__) // Save message in db
+          .then((response) => console.log(response))
+          .catch((err) => console.log(err));
+      });
 });
 
 server.listen(4000, () => 'Server is running on port 3000');
