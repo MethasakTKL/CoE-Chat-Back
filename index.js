@@ -3,7 +3,7 @@ console.log(process.env.HARPERDB_URL); // remove this after you've confirmed it 
 const harperSaveMessage = require('./services/harper-save-message');
 const harperGetMessages = require('./services/harper-get-messages');
 const leaveRoom = require('./utils/leave-room'); // Add this
-
+const port = process.env.port || 4000;
 const express = require('express');
 const app = express();
 http = require('http');
@@ -93,4 +93,4 @@ io.on('connection', (socket) => {
       });
 });
 
-server.listen(4000, () => 'Server is running on port 3000');
+server.listen(port, () => 'Server is running on port 3000');
