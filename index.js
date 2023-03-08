@@ -18,12 +18,12 @@ const server = http.createServer(app); // Add this
 // Create an io server and allow for CORS from http://localhost:3000 with GET and POST methods
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: '*',
         methods: ['GET', 'POST'],
     },
 });
 
-const CHAT_BOT = 'ChatBot';
+const CHAT_BOT = 'CoEChatBot';
 let chatRoom = ''; // E.g. javascript, node,...
 let allUsers = []; // All users in current chat room
 // Listen for when the client connects via socket.io-client
