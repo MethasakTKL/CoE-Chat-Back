@@ -23,6 +23,7 @@ const io = new Server(server, {
     },
 });
 
+
 const CHAT_BOT = 'CoEChatBot';
 let chatRoom = ''; // E.g. javascript, node,...
 let allUsers = []; // All users in current chat room
